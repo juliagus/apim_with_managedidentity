@@ -1,5 +1,5 @@
 # Azure APIM with Managed Identity to connect to Azure AI Foundry
-How to use Azure APIM and protect APIs with Microsoft Entra ID (using Managed Indentity). When Client is calling APIM API endpoint they will need to provide token + subscription key. Authorization to AI Foundry (which is backend for API) is done using system assigned managed identities. 
+How to use Azure APIM and protect APIs with Microsoft Entra ID (using Managed Indentity). When Client is calling APIM API endpoint it will need to provide token + subscription key. Authorization to AI Foundry (which is backend for API) is done using system assigned managed identities. 
 ![alt text](./images/overview.jpg)
 
 # 1. Micrsoft Entra ID: Create Managed Identity
@@ -18,19 +18,20 @@ Note that No Role Assignments are needed at this step.
 ![alt text](./images/apim_05.png)
 2. Create Named Value storing Tenant ID in the same way.
 
-# 2. Policy Configuration at APIM
+# 4. Policy Configuration at APIM
 1. Your API policy *inbound* section should contain the JWT validation policy with required claims (managed identity client ID).
 2. Example of the policy is here apim_test/api_policy.xml . Note that this policy first should validate the received token for ManagedIdentity-01 and later retrieve another one for MI to access Azure AI Foundry. 
 3. And the policy uses named values {{managed-identity-01}} and {{tenant-id}} created at a previous step. 
 4. As the policy match="any" you can validate multiple managed identities in the claims.
 
-# 3. Test the requests are reaching Azure AI Foundry
+# 5. Test the requests are reaching Azure AI Foundry
 1. Note that you can *only* test this configuration from inside Azure. In current example your client is VM in Azure.
 2. Your client code should include essentially 2 steps: 
 - get the access token for Managed Identity
 - call API endpoint (with token + subscription key)
 3. The client (in this case VM) needs to pass APIM Subscription Key + token.
 Sample code is provided in apim_test folder.
+
 
 # Prerequisite 1: Basic APIM Configuration
 0. Create Azure AI Foundry Resource and Model deployment beforehand (use foundry resource not hub based projects). 
