@@ -1,0 +1,32 @@
+<policies>
+    <inbound>
+        <base />
+        <!-- 1) Validate CLIENT token (leave Authorization header untouched here) -->
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
+            <openid-config url="https://login.microsoftonline.com/{{tenant-id}}/.well-known/openid-configuration" />
+            <audiences>
+                <audience>https://management.azure.com/</audience>
+            </audiences>
+            <issuers>
+                <issuer>https://sts.windows.net/{{tenant-id}}/</issuer>
+            </issuers>
+            <required-claims>
+                <claim name="appid" match="any">
+                    <value>{{managed-identity-01}}</value>
+                </claim>
+            </required-claims>
+        </validate-jwt>
+        <set-backend-service id="apim-generated-policy" backend-id="my-test-api-name-ai-endpoint" />
+        <!-- 2) Acquire MI token for AI Foundry -->
+        <authentication-managed-identity resource="https://cognitiveservices.azure.com/" output-token-variable-name="miToken" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
