@@ -2,8 +2,8 @@
 How to use Azure APIM and protect APIs with Microsoft Entra ID (using Managed Indentity). When Client is calling APIM API endpoint it will need to provide token + subscription key. Authorization to AI Foundry (which is backend for API) is done using system assigned managed identities. 
 ![alt text](./images/overview.jpg)
 
-# 1. Micrsoft Entra ID: Create Managed Identity
-1. Create Managed Identity (no Azure Role Assignments) and record "Client ID" value.
+# 1. Microsoft Entra ID: Create Managed Identity
+1. Create Managed Identity (no Azure Role Assignments) and record "Client ID" value. You need to have adequate privileges to be able to create Managed Identities in Microsoft Entra ID.
 Note that No Role Assignments are needed at this step. 
 ![alt text](./images/mi_01.png)
 ![alt text](./images/mi_02.png)
