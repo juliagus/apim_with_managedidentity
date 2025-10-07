@@ -1,4 +1,4 @@
-# Azure APIM with Managed Identity to connect to Azure AI Foundry
+# Protect Azure APIM with Managed Identity and connect to Azure AI Foundry
 How to use Azure APIM and protect APIs with Microsoft Entra ID (using Managed Indentity). When Client is calling APIM API endpoint it will need to provide token + subscription key. Authorization to AI Foundry (which is backend for API) is done using system assigned managed identities. 
 ![alt text](./images/overview.jpg)
 
